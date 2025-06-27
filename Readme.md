@@ -83,8 +83,8 @@ Suivez ces étapes simples pour mettre en place et exécuter l'application :
 1. *Cloner le dépôt Git* :
 
 
-    git clone https://github.com/votre-utilisateur/tp_exam.git
-    cd tp_exam
+    git clone https://github.com/darel-developer/CRUDAPP
+    cd CRUDAPP
 
 
 2. *Configurer la base de données MySQL* :
