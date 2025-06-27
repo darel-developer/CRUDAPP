@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tableau de Bord - Gestion de Stock</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="~{fragments/styles :: styles}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
+
+<div class="container-fluid px-4 mt-4">
+    <!-- Header avec titre et date -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="display-5 fw-bold text-primary mb-1">Tableau de Bord</h1>
+            <p class="text-muted mb-0" th:text="'Dernière mise à jour: ' + ${#temporals.format(#temporals.createNow(), 'dd MMMM yyyy HH:mm')}"></p>
+        </div>
+    </div>
+
+    <!-- Cartes de statistiques -->
+    <div class="row g-4 mb-4">
+        <div class="col-xl-6 col-md-6">
+            <div class="card border-start border-primary border-4 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Catégories</h6>
+                            <h3 class="mb-0" th:text="${categoryCount}">0</h3>
+                        </div>
+                        <div class="bg-primary bg-opacity-10 p-3 rounded">
+                            <i class="bi bi-tags-fill text-primary fs-4"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <a href="/categories" class="text-decoration-none">
+                            Voir toutes les catégories
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-md-6">
+            <div class="card border-start border-success border-4 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Produits</h6>
+                            <h3 class="mb-0" th:text="${produitCount}">0</h3>
+                        </div>
+                        <div class="bg-success bg-opacity-10 p-3 rounded">
+                            <i class="bi bi-box-seam-fill text-success fs-4"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <a href="/produits" class="text-decoration-none">
+                            Voir tous les produits
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableaux -->
+    <div class="row g-4">
+        <!-- Tableau des catégories -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white border-bottom-0 py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-tags me-2 text-primary"></i> Dernières catégories</h5>
+                        <a href="/categories" class="btn btn-sm btn-outline-primary">Voir tout</a>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Nom</th>
+                                <th>Produits</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="category : ${categories}">
+                                <td>
+                                    <span class="fw-semibold" th:text="${category.nomCategory}"></span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary"
+                                          th:text="${category.produits != null ? category.produits.size() : 0} + ' produits'"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tableau des produits -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-white border-bottom-0 py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-box-seam me-2 text-success"></i> Derniers produits</h5>
+                        <a href="/produits" class="btn btn-sm btn-outline-success">Voir tout</a>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Nom</th>
+                                <th>Catégorie</th>
+                                <th>Prix</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="produit : ${produits}">
+                                <td>
+                                    <span class="fw-semibold" th:text="${produit.nomProduit}"></span>
+                                </td>
+                                <td>
+                                    <span th:if="${produit.categorie != null}"
+                                          class="badge bg-secondary bg-opacity-10 text-secondary"
+                                          th:text="${produit.categorie.nomCategory}"></span>
+                                    <span th:unless="${produit.categorie != null}" class="text-muted">Aucune</span>
+                                </td>
+                                <td th:text="${#numbers.formatDecimal(produit.prixProduit, 1, 2)} + ' €'"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
