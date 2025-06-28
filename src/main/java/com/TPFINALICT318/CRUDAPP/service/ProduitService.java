@@ -1,7 +1,7 @@
-package com.ict.tp_exam.service;
+package com.TPFINALICT318.CRUDAPP.service;
 
-import com.ict.tp_exam.model.Produit;
-import com.ict.tp_exam.repository.ProduitRepository;
+import com.TPFINALICT318.CRUDAPP.model.Produit;
+import com.TPFINALICT318.CRUDAPP.repository.ProduitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
