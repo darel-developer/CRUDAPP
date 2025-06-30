@@ -19,14 +19,20 @@
         </div>
     </div>
 
-    <div class="container my-4">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title text-center mb-4">Nombre de Produits par Catégorie</h5>
-                <canvas id="produitChart" width="100%" height="40"></canvas>
+    <!-- Graphique Produits par Catégorie -->
+    <div class="container-fluid px-4 mt-4">
+        <div class="row g-4 mb-4">
+            <div class="col-12">
+                <div class="card border-start border-warning border-4">
+                    <div class="card-body">
+                        <h6 class="card-title text-warning mb-3">Répartition des Produits par Catégorie</h6>
+                        <canvas id="produitChart" width="600" height="100"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 
     <!-- Cartes de statistiques -->
     <div class="row g-4 mb-4">
@@ -154,29 +160,36 @@
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    let labels = /*[[${produitParCategorie.keySet()}]]*/ [];
-    let data = /*[[${produitParCategorie.values()}]]*/ [];
+    const ctx = document.getElementById('produitChart').getContext('2d');
+    const labels = [[${produitParCategorie.keySet()}]];
+    const data = [[${produitParCategorie.values()}]];
 
-    new Chart(document.getElementById("produitChart"), {
+    new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
                 label: 'Produits',
                 data: data,
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(255, 193, 7, 0.6)',
+                borderColor: 'rgba(255, 193, 7, 1)',
                 borderWidth: 1
             }]
         },
         options: {
-            responsive: true,
+            indexAxis: 'x',
             scales: {
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        precision: 0
+                        stepSize: 1
                     }
+                }
+            },
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
                 }
             }
         }
