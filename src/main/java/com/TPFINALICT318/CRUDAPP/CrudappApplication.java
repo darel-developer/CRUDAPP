@@ -32,7 +32,7 @@ public class CrudappApplication {
         List<?> allCategories = categoryService.getAllCategories();
         List<Produit> allProduits = produitService.getAllProduits();
 
-        // Journalisation pour débogage
+        // Journalisation pour débogage 
         System.out.println("Nombre de catégories: " + allCategories.size());
         System.out.println("Nombre de produits: " + (allProduits != null ? allProduits.size() : "null"));
 
