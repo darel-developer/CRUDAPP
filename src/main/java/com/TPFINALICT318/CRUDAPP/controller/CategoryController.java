@@ -2,13 +2,16 @@ package com.TPFINALICT318.CRUDAPP.controller;
 
 import com.TPFINALICT318.CRUDAPP.model.Category;
 import com.TPFINALICT318.CRUDAPP.service.CategoryService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/categories")
@@ -48,7 +51,13 @@ public class CategoryController {
     }
 
     @PostMapping("/update")
-    public String updateCategory(@ModelAttribute Category category) {
+    public String updateCategory(@Valid @ModelAttribute Category category, BindingResult result, Model model) {
+        System.out.println("Category ID: " + category.getIdCategory() + ", Name: " + category.getNomCategory());
+        if (result.hasErrors()) {
+            System.out.println("Errors: " + result.getAllErrors());
+            model.addAttribute("activePage", "categories");
+            return "categoryForm";
+        }
         categoryService.saveCategory(category);
         return "redirect:/categories?success=true";
     }

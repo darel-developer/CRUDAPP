@@ -16,7 +16,10 @@
 
             <div class="mb-4">
                 <label for="nomCategory" class="form-label">Nom de la Catégorie</label>
-                <input type="text" th:field="*{nomCategory}" class="form-control" required>
+                <input type="text" th:field="*{nomCategory}" class="form-control" id="nomCategory" required>
+                <div th:if="${#fields.hasErrors('nomCategory')}" class="text-danger">
+                    <span th:errors="*{nomCategory}"></span>
+                </div>
             </div>
 
             <div class="d-flex justify-content-between">
