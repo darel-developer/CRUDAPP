@@ -9,6 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 @SpringBootApplication
 @Controller
 public class CrudappApplication {
@@ -24,8 +28,8 @@ public class CrudappApplication {
 
 	@GetMapping("/")
 	public String home(Model model) {
-		var allCategories = categoryService.getAllCategories();
-		var allProduits = produitService.getAllProduits();
+		List<?> allCategories = categoryService.getAllCategories();
+		List<?> allProduits = produitService.getAllProduits();
 
 		var lastCategories = allCategories.stream()
 				.skip(Math.max(0, allCategories.size() - 3))
@@ -35,11 +39,20 @@ public class CrudappApplication {
 				.skip(Math.max(0, allProduits.size() - 3))
 				.toList();
 
+		// ✅ Données pour le graphique
+		Map<String, Integer> produitParCategorie = new LinkedHashMap<>();
+		categoryService.getAllCategories().forEach(cat -> {
+			int count = (cat.getProduits() != null) ? cat.getProduits().size() : 0;
+			produitParCategorie.put(cat.getNomCategory(), count);
+		});
+
 		model.addAttribute("categoryCount", allCategories.size());
 		model.addAttribute("produitCount", allProduits.size());
 		model.addAttribute("categories", lastCategories);
 		model.addAttribute("produits", lastProduits);
+		model.addAttribute("produitParCategorie", produitParCategorie);
 		model.addAttribute("activePage", "dashboard");
+
 		return "dashboard";
 	}
 }
