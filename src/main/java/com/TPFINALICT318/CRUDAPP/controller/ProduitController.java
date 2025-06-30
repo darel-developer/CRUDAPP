@@ -1,8 +1,8 @@
-package com.ict.tp_exam.controller;
+package com.TPFINALICT318.CRUDAPP.controller;
 
-import com.ict.tp_exam.model.Produit;
-import com.ict.tp_exam.service.CategoryService;
-import com.ict.tp_exam.service.ProduitService;
+import com.TPFINALICT318.CRUDAPP.model.Produit;
+import com.TPFINALICT318.CRUDAPP.service.CategoryService;
+import com.TPFINALICT318.CRUDAPP.service.ProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
