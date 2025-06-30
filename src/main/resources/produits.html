@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Produits</title>
+    <meta charset="UTF-8">
+    <th:block th:replace="~{fragments/styles :: styles}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white border-bottom-0 py-3 d-flex justify-content-between align-items-center">
+            <h4 class="mb-0 text-success"><i class="bi bi-box-seam me-2"></i>Gestion des Produits</h4>
+            <a href="/produits/new" class="btn btn-outline-success"><i class="bi bi-plus-circle me-1"></i>Ajouter un Produit</a>
+        </div>
+        <div class="card-body pt-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Catégorie</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="produit : ${produits}">
+                        <td th:text="${produit.nomProduit}"></td>
+                        <td th:text="${#numbers.formatDecimal(produit.prixProduit, 1,2)} + ' €'"></td>
+                        <td>
+                            <span th:if="${produit.categorie != null}"
+                                  class="badge bg-secondary bg-opacity-10 text-secondary"
+                                  th:text="${produit.categorie.nomCategory}"></span>
+                            <span th:unless="${produit.categorie != null}" class="text-muted">Aucune</span>
+                        </td>
+                        <td class="text-end">
+                            <a th:href="@{/produits/edit/{id}(id=${produit.idProduit})}" class="btn btn-sm btn-outline-warning me-2">
+                                <i class="bi bi-pencil me-1"></i>Modifier
+                            </a>
+                            <a th:href="@{/produits/delete/{id}(id=${produit.idProduit})}" class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Confirmer la suppression ?');">
+                                <i class="bi bi-trash me-1"></i>Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
