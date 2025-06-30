@@ -22,7 +22,18 @@ public class CategoryService {
     }
 
     public Category saveCategory(Category category) {
-        return categoryRepository.save(category);
+        if (category.getIdCategory() != null && categoryRepository.existsById(category.getIdCategory())) {
+            // Charger la catégorie existante avec ses produits
+            Category existingCategory = categoryRepository.findById(category.getIdCategory())
+                    .orElseThrow(() -> new RuntimeException("Catégorie non trouvée"));
+            // Mettre à jour uniquement le nom
+            existingCategory.setNomCategory(category.getNomCategory());
+            // Sauvegarder la catégorie existante (la collection produits reste intacte)
+            return categoryRepository.save(existingCategory);
+        } else {
+            // Création d'une nouvelle catégorie
+            return categoryRepository.save(category);
+        }
     }
 
     public void deleteCategory(String id) {
