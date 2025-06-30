@@ -10,8 +10,8 @@ public class Produit {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "VARCHAR(36)")
-    private UUID idProduit;
+    @Column(length = 36)
+    private String idProduit;
 
     private String nomProduit;
     private Double prixProduit;
@@ -21,11 +21,11 @@ public class Produit {
     private Category categorie;
 
     // Getters et Setters
-    public UUID getIdProduit() {
+    public String getIdProduit() {
         return idProduit;
     }
 
-    public void setIdProduit(UUID idProduit) {
+    public void setIdProduit(String idProduit) {
         this.idProduit = idProduit;
     }
 
