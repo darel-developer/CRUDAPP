@@ -39,7 +39,7 @@ public class CrudappApplication {
 				.skip(Math.max(0, allProduits.size() - 3))
 				.toList();
 
-		// ✅ Données pour le graphique
+
 		Map<String, Integer> produitParCategorie = new LinkedHashMap<>();
 		categoryService.getAllCategories().forEach(cat -> {
 			int count = (cat.getProduits() != null) ? cat.getProduits().size() : 0;
